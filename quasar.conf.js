@@ -83,7 +83,7 @@ module.exports = function (ctx) {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {},
       manifest: {
-        // name: 'Quasar App',
+        name: 'Personeria de Ibagué',
         // short_name: 'Quasar-PWA',
         // description: 'Best PWA App in town!',
         display: 'standalone',
