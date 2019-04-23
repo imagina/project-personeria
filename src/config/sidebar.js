@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /**
  * Config for items in Menu
  */
@@ -11,6 +12,7 @@
 },*/
 
 export default {
+  // eslint-disable-next-line spaced-comment
   /*home*/
   home: {
     title: 'Home',
@@ -38,8 +40,8 @@ export default {
       {
         title: 'My profile',
         icon: 'fas fa-user-tie',
-        to: 'user.profile.me',
-      },
+        to: 'user.profile.me'
+      }
       /*
       {
         title: 'Departments',
