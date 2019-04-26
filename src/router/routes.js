@@ -1,10 +1,9 @@
 import Route from 'vue-routisan'
-import user from '@imagina/quser/_router/routes' //Routes module QUser
-import auth from '@imagina/quser/_router/middlewares/auth' //Middleware auth
+import user from '@imagina/quser/_router/routes' // Routes module QUser
+import auth from '@imagina/quser/_router/middlewares/auth' // Middleware auth
 
 // Define path where your views are stored
 Route.setViewResolver(component => require('src/layouts/' + component).default)
-
 
 Route.view('/', 'master')
   .guard(auth)
@@ -15,6 +14,9 @@ Route.view('/', 'master')
     }
   )
 
-Route.view('*', 'pages/404')//Route error 404
+Route.view('*', 'pages/404')
+Route.view('/news', 'pages/news')
+Route.view('/proceedings', 'pages/proceedings')
+Route.view('/profile', 'pages/profile')
 
 export default Route.all()
