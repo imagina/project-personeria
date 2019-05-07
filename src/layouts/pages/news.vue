@@ -1,57 +1,29 @@
 <template>
-  <div class="q-px-md q-py-lg">
-
-    <q-field  class="q-my-lg">
-      <q-input 
-        v-model="model" 
-        float-label="Titulo de la Noticia" 
-        :after="[{icon : 'local_offer'}]"/>
-    </q-field>
-
-    <q-field  class="q-my-lg">
-      <q-select
-        v-model="select"
-        float-label="Categoría de la noticia"
-        multiple
-        chips
-        :options="selectOptions"/>
-    </q-field>
-
-    <q-field class="q-my-xl">
-      <q-uploader :url="url" v-model="form.image"/>
-    </q-field>
-
-    <div class="q-mt-xl">
-      <p>Contenido de la Noticia</p>
-      <q-editor v-model="form.content" />
-    </div>
-
-  </div>
+  <q-tabs inverted color="green" animated>
+    <q-tab default slot="title" name="list" label="Noticias" />
+    <q-tab slot="title" name="create" label="Subir Noticia" />
+    <q-tab-pane name="list">
+      <!-- LIST COMPONENT -->
+      <indexComponent/>
+    </q-tab-pane>
+    <q-tab-pane name="create">
+      <!-- CREATE COMPONENT -->
+      <createComponent/>
+    </q-tab-pane>
+  </q-tabs>
 </template>
 
 <script>
+  // COMPONENTS
+  import createComponent from 'src/components/app/news/create'
+  import indexComponent from 'src/components/app/news/index'
   export default {
+    components:{
+      indexComponent,
+      createComponent,
+    },
     data(){
       return{
-        form:{
-          title: '',
-          category: '',
-          image: '',
-          content: ''
-        },
-        model: '',
-        url: '',
-        select: [],
-        selectOptions: [
-          {
-            label: 'Google',
-            value: 'goog'
-          },
-          {
-            label: 'Facebook',
-            value: 'fb'
-          }
-        ],
       }
     }
   }

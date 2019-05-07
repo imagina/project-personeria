@@ -2,11 +2,11 @@
   <q-layout view="lHh LpR lFr">
 
     <!-- === HEADER === -->
-    <q-layout-header class="no-shadow">
-      <q-toolbar color="primary">
+    <q-layout-header class="shadow-2">
+      <q-toolbar color="white">
         <!--= BUTTON MENU =-->
         <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu">
-          <q-icon name="menu"/>
+          <q-icon name="menu" color="green"/>
         </q-btn>
 
         <!--= TITLE =-->
@@ -59,17 +59,25 @@
       <!--=== DATA LOGIN ===-->
       <div class="q-body-1 q-py-sm q-px-lg text-center bg-grey-2">
         <q-icon name="copyright"/>
-        Copyright FHIAProducts.com
+        Copyright Pesonería de Ibague
       </div>
     </q-layout-footer>
 
     <!-- === BACK TO TOP === -->
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-page-sticky position="bottom-right" :offset="[18, 18]" class="hidden">
       <q-btn
         v-back-to-top.animate="{offset: 500, duration: 200}"
         round
         color="primary"
         icon="keyboard_arrow_up"
+      />
+    </q-page-sticky>
+
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn
+        round
+        color="red"
+        icon="fa fa-comment"
       />
     </q-page-sticky>
 

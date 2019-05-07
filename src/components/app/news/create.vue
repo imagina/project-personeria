@@ -1,73 +1,56 @@
 <template>
-  <div>
-
-    <q-field
-      :error="$v.form.title.$error"
-      error-label="Este campo es requerido"
-      class="q-mb-md">
+  <div class="">
+    <q-field  class="">
       <q-input 
-        autofocus
-        autocomplete="off"
-        v-model="form.title"
-        type="text"
-        :before="[{icon: 'person'}]"        
-        float-label="Email"/>
+        v-model="model" 
+        float-label="Titulo de la Noticia" 
+        :after="[{icon : 'local_offer'}]"/>
     </q-field>
-
-    <q-field
-      :error="$v.form.category.$error"
-      error-label="Este campo es requerido"
-      class="q-mb-md">
+    <q-field  class="q-my-lg">
       <q-select
-        v-model="form.category"
-        float-label="Categoria"
-        radio
-      :options="categories"/>
+        v-model="select"
+        float-label="Categoría de la noticia"
+        multiple
+        chips
+        :options="selectOptions"/>
     </q-field>
-
-    <q-field
-      error-label="Este campo es requerido"
-      class="q-mb-md">
-      <q-uploader
-        url=""
-        :upload-factory="uploadFile"/>
+    <q-field class="q-my-xl">
+      <q-uploader 
+        :url="url" 
+        v-model="form.image"/>
     </q-field>
-
-    <q-field
-      error-label="Este campo es requerido"
-      class="q-mb-md">
-      <q-editor v-model="form.content" />
-    </q-field>
-
-    <div class="text-center q-pt-lg">
-      <q-btn 
-        :loading="loading_login"
-        color="primary"
-        label="LOGIN">      
-        <span slot="loading">
-          <q-spinner class="on-left"/>
-          <span>Guardando...</span>
-        </span>
-      </q-btn>
+    <div class="q-mt-lg">
+      <p>Contenido de la Noticia</p>
+      <q-editor 
+        v-model="form.content" 
+        height="300px"/>
     </div>
-
-
   </div>
 </template>
 
 <script>
   export default {
-    name: 'newsComponent',
-    data () {
-      return {
-        categories:[],
+    data(){
+      return{
         form:{
-          title: null,
-          category: null,
-          image: null,
-          content: null
+          title: '',
+          category: '',
+          image: '',
+          content: ''
         },
-        loading_login: false,
+        model: '',
+        url: '',
+        select: [],
+        selectOptions: [
+          {
+            label: 'Categoría 1',
+            value: 'Categoría'
+          },
+          {
+            label: 'Categoría 2',
+            value: 'Categoría'
+          }
+        ],
       }
     }
   }

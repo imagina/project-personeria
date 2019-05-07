@@ -1,60 +1,24 @@
-/* eslint-disable spaced-comment */
-/**
- * Config for items in Menu
- */
-
-/*
-*{
-  title: 'Assignment',
-  icon: 'fas fa-users-cog',
-  to: 'user.users.assignment',
-  can:'user.users.index'
-},*/
-
 export default {
-  // eslint-disable-next-line spaced-comment
-  /*home*/
-  home: {
-    title: 'Home',
+  profile: {
+    title: 'Perfil',
     icon: 'fas fa-home',
-    to: 'home',
+    to: 'profile',
+    //can: 'iprofile.api.user.permission',
   },
-  /*User*/
-  user: {
-    title: 'Users',
+  proceedings: {
+    title: 'Actas',
     icon: 'fas fa-users',
-    can: 'iprofile.api.user.permission',
-    children: [
-      {
-        title: 'Create',
-        icon: 'fas fa-user-plus',
-        to: 'user.users.create',
-        can: 'iprofile.api.user.create'
-      },
-      {
-        title: 'List/Search',
-        icon: 'fas fa-list-alt',
-        to: 'user.users.index',
-        can: 'iprofile.api.user.index'
-      },
-      {
-        title: 'My profile',
-        icon: 'fas fa-user-tie',
-        to: 'user.profile.me'
-      }
-      /*
-      {
-        title: 'Departments',
-        icon: 'fas fa-cubes',
-        to: 'user.department',
-        can: 'iprofile.api.user.deparment'
-      }
-      */
-    ]
+    to:'proceedings'
+    //can: 'iprofile.api.user.permission',
   },
-  /*logout*/
+  news: {
+    title: 'Noticias',
+    icon: 'fas fa-users',
+    to: 'news'
+    //can: 'iprofile.api.user.permission',
+  },
   logout: {
-    title: 'Sign out',
+    title: 'Cerrar Sesión',
     icon: 'fas fa-sign-out-alt',
     to: 'auth.logout'
   }

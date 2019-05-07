@@ -6,17 +6,23 @@ import auth from '@imagina/quser/_router/middlewares/auth' // Middleware auth
 Route.setViewResolver(component => require('src/layouts/' + component).default)
 
 Route.view('/', 'master')
-  .guard(auth)
+  //.guard(auth)
   .children(() => {
       Route.view('/', 'pages/Index').options({
         name: 'home'
+      }),
+      Route.view('/profile', 'pages/profile').options({
+        name: 'profile'
+      }),
+      Route.view('/proceedings', 'pages/proceedings').options({
+        name: 'proceedings'
+      }),
+      Route.view('/news', 'pages/news').options({
+        name: 'news'
       })
     }
   )
 
 Route.view('*', 'pages/404')
-Route.view('/news', 'pages/news')
-Route.view('/proceedings', 'pages/proceedings')
-Route.view('/profile', 'pages/profile')
 
 export default Route.all()
