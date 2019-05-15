@@ -2,7 +2,7 @@
   <q-layout view="lHh LpR lFr">
 
     <!-- === HEADER === -->
-    <q-layout-header class="shadow-2">
+    <q-layout-header class="shadow-4">
       <q-toolbar color="white">
         <!--= BUTTON MENU =-->
         <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu">
@@ -55,7 +55,7 @@
     </q-page-container>
 
     <!-- === FOOTER === -->
-    <q-layout-footer class="no-shadow">
+    <q-layout-footer class="no-shadow" v-if="false">
       <!--=== DATA LOGIN ===-->
       <div class="q-body-1 q-py-sm q-px-lg text-center bg-grey-2">
         <q-icon name="copyright"/>

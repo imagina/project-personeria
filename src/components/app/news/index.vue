@@ -6,7 +6,7 @@
       :key="index">
       <div class="col-xs-6">
         <img 
-          src="https://picsum.photos/150" 
+          src="https://picsum.photos/150/120" 
           class="responsive">
       </div>
       <div class="col-xs-6 q-body-1">
