@@ -11,8 +11,11 @@ Route.view('/', 'master')
       Route.view('/', 'pages/Index').options({
         name: 'home'
       }),
-      Route.view('/profile', 'pages/profile').options({
+      Route.view('/profile', 'pages/user/profile').options({
         name: 'profile'
+      }),
+      Route.view('/profile/edit', 'pages/user/edit').options({
+        name: 'profile.me'
       }),
       Route.view('/proceedings', 'pages/proceedings').options({
         name: 'proceedings'

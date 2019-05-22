@@ -1,5 +1,8 @@
 <template>
   <div>
+    <img 
+      class="bandera-position-absolute"
+      src="/assets/app/bandera_Ibague.png">
     <profileComponent/>
   </div>
 </template>
@@ -12,3 +15,10 @@
     }
   }
 </script>
+
+<style scope>
+  .bandera-position-absolute{
+    position:absolute;
+    right:0px
+  }
+</style>

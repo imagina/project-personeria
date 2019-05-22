@@ -39,7 +39,7 @@
         <q-list-header class="text-center">
           <router-link :to="{ name: 'home'}">
             <a>
-              <img src="../assets/image/logo.png" width="80%">
+              <img src="../assets/image/logo.png" width="100%">
             </a>
           </router-link>
         </q-list-header>
