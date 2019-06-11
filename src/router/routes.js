@@ -1,31 +1,35 @@
 import Route from 'vue-routisan'
-import user from '@imagina/quser/_router/routes' // Routes module QUser
-import auth from '@imagina/quser/_router/middlewares/auth' // Middleware auth
+//Redirect
+Route.redirect('/', '/home');
 
-// Define path where your views are stored
-Route.setViewResolver(component => require('src/layouts/' + component).default)
+//Create all routes from pages
+const pages = config('pages')//Get pages from config
 
-Route.view('/', 'master')
-  //.guard(auth)
-  .children(() => {
-      Route.view('/', 'pages/Index').options({
-        name: 'home'
-      }),
-      Route.view('/profile', 'pages/user/profile').options({
-        name: 'profile'
-      }),
-      Route.view('/profile/edit', 'pages/user/edit').options({
-        name: 'profile.me'
-      }),
-      Route.view('/proceedings', 'pages/proceedings').options({
-        name: 'proceedings'
-      }),
-      Route.view('/news', 'pages/news').options({
-        name: 'news'
-      })
+for (var nameGroupPage in pages) {
+  let groupPages = pages[nameGroupPage]//Get group pages
+  //Loop group pages
+  if (Object.keys(groupPages).length) {
+    for (var namePage in groupPages) {
+      let page = groupPages[namePage]//Get page
+      if (page.activated) {//Check if page is activated
+        //Create Route
+        Route.view('/', page.containerLayout)
+          .children(() => {
+              Route.view(page.path, page.layout).options({
+                name: page.name,
+                meta: {permission: (page.permission ? page.permission : null)},
+                guard : (page.middleware ? page.middleware : []),
+                props: (route) => {
+                  let propsData = page.props ? page.props : {}
+                  propsData.parentId = route.params.parentId || null
+                  return propsData
+                },
+              });
+            }
+          )
+      }
     }
-  )
-
-Route.view('*', 'pages/404')
+  }
+}
 
 export default Route.all()

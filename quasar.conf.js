@@ -11,7 +11,10 @@ module.exports = function (ctx) {
     plugins: [
       'i18n',
       'vuelidate',
-      'axios'
+      'axios',
+      'moment',
+      'helper',
+      'auth'
     ],
     css: [
       'app.styl'
@@ -27,6 +30,7 @@ module.exports = function (ctx) {
     build: {
       scopeHoisting: true,
       env: envparser(),
+      // vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,
@@ -35,10 +39,10 @@ module.exports = function (ctx) {
         // Make our helper function Global, for example to use it in js files you should call it env('MY_VALUE')
         cfg.plugins.push(
           new webpack.ProvidePlugin({
-            env: [path.resolve(__dirname, 'env/env'),'default']
+            env: [path.resolve(__dirname, 'env/env'), 'default'],
+            config: [path.resolve(__dirname, 'src/config/index'), 'default']
           })
         )
-
       }
     },
     devServer: {
@@ -46,9 +50,9 @@ module.exports = function (ctx) {
       // port: 8080,
       open: true // opens browser window automatically
     },
+    // framework: 'all' --- includes everything; for dev only!
     framework: 'all',
-    /*framework: {
-      components: [
+      /*components: [
         'QLayout',
         'QLayoutHeader',
         'QLayoutDrawer',
@@ -80,20 +84,36 @@ module.exports = function (ctx) {
       pwa: false
     },
     pwa: {
-      // workboxPluginMode: 'InjectManifest',
-      // workboxOptions: {},
+      workboxPluginMode: 'InjectManifest',
+      workboxOptions: {},
       manifest: {
-        name: 'Personeria de Ibagué',
-        // short_name: 'Quasar-PWA',
-        // description: 'Best PWA App in town!',
-        display: 'standalone',
+        name: 'APP',
+        short_name: 'APP',
+        description: '',
         orientation: 'portrait',
         background_color: '#ffffff',
-        theme_color: '#027be3',
+        theme_color: '#ffffff',
+        display: "standalone",
+        serviceWorker: {
+          src: "service-worker.js",
+          scope: "/",
+          use_cache: true,
+          skipWaiting: true
+        },
         icons: [
           {
             'src': 'statics/icons/icon-128x128.png',
             'sizes': '128x128',
+            'type': 'image/png'
+          },
+          {
+            'src': 'statics/icons/apple-icon-152x152.png',
+            'sizes': '152x152',
+            'type': 'image/png'
+          },
+          {
+            'src': 'statics/icons/ms-icon-144x144.png',
+            'sizes': '144x144',
             'type': 'image/png'
           },
           {
@@ -120,7 +140,20 @@ module.exports = function (ctx) {
       }
     },
     cordova: {
-      // id: 'org.cordova.quasar.app'
+        plugins: {
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-crosswalk-webview": {
+                " XWALK_VERSION ": " 23+ ",
+                " XWALK_LITEVERSION ": " xwalk_core_core_library_canary: 17+ ",
+                " XWALK_COMMANDLINE ": "--disable-pull-to-refresh-effect ",
+                " XWALK_MODE ": " incrustado ",
+                " XWALK_MULTIPLEAPK ": " verdadero "
+            },
+            "cordova-plugin-camera-preview": {}
+        },
+        "plataformas": [
+            "android"
+        ],
     },
     electron: {
       // bundler: 'builder', // or 'packager'

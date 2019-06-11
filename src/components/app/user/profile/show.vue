@@ -23,7 +23,6 @@
       </div>
     </div>
     <indexComponent/>
-
   </div>
 </template>
 

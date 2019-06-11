@@ -1,28 +1,24 @@
 <template>
   <div class="row">
-    <div class="col-xs-5 flex flex-center q-mt-lg q-mb-lg">
-      <img src="https://picsum.photos/500" class="avatar-full-width">
+    <div class="col-xs-5 flex flex-center q-mt-lg q-mb-lg" v-if="$store.state.auth.userData.mainImage">
+      <img :src="$store.state.auth.userData.mainImage" class="avatar-full-width" style="max-width: 100px">
     </div>
     <div class="col-xs-7">
       <div class="row">
         <div class="col-xs-12 q-mt-xl min-line-height">
           <p class="text-color-primary">
-            <b>Nombre Completo</b>
+            <b>{{$store.state.auth.userData.fullName}}</b>
           </p>
-          <p>
-            <span class="text-color-primary">
-              <b>CC</b>
-            </span> 
-            1110.000.000</p>
-          <p>
-            <q-icon name="person" color="primary" class="min-line-height"/>
-            Cargo del Usuario</p>
-          <p>
-            <q-icon name="email" color="primary" class="min-line-height"/>
-            usuario@ejemplo.com</p>
-          <p>
-            <q-icon name="phone" color="primary" class="min-line-height"/>
-            +57 300 000 0000</p>
+          <div class="row">
+            <q-icon name="email" color="primary" class="min-line-height col-1"/>
+            <span class="col-10">{{$store.state.auth.userData.email}}</span>
+          </div>
+
+          <div class="row" style="padding-top: 15px">
+            <q-icon name="phone" color="primary" class="min-line-height col-1"/>
+            <span class="col-10">{{$store.getters['auth/findField']('cellularPhone').value}}</span>
+          </div>
+
         </div>
       </div>
     </div>
@@ -31,7 +27,9 @@
 
 <script>
 export default {
-
+  mounted(){
+      console.warn(this.$store.state.auth.userData)
+  }
 }
 </script>
 

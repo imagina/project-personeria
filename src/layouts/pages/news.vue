@@ -1,5 +1,7 @@
 <template>
-  <q-tabs inverted color="green" animated>
+  <div class="row justify-center">
+    <div class="col-12 col-md-6">
+  <q-tabs inverted color="green" animated v-model="courentTap">
     <q-tab default slot="title" name="list" label="Noticias" />
     <q-tab slot="title" name="create" label="Subir Noticia" />
     <q-tab-pane name="list">
@@ -8,9 +10,11 @@
     </q-tab-pane>
     <q-tab-pane name="create">
       <!-- CREATE COMPONENT -->
-      <createComponent/>
+      <createComponent @created="courentTap='list'"/>
     </q-tab-pane>
   </q-tabs>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -23,8 +27,9 @@
       createComponent,
     },
     data(){
-      return{
-      }
+        return {
+            courentTap:'list'
+        }
     }
   }
 </script>

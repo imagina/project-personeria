@@ -1,112 +1,80 @@
 <template>
-  <q-layout view="lHh LpR lFr">
+  <q-layout view="lHh LpR lFr" v-if="$store.state.app.active && loadedApp">
+    <!-- HEADER -->
+    <master-header></master-header>
 
-    <!-- === HEADER === -->
-    <q-layout-header class="shadow-4">
-      <q-toolbar color="white">
-        <!--= BUTTON MENU =-->
-        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu">
-          <q-icon name="menu" color="green"/>
-        </q-btn>
-
-        <!--= TITLE =-->
-        <q-toolbar-title class="gt-xs">
-          IMAGINA
-        </q-toolbar-title>
-
-        <!--= FULLSCREEN =-->
-        <q-btn flat dense
-               class="desktop-only"
-               :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
-               @click="toggleFullscreen()"></q-btn>
-
-        <!--= DEPARTMENT SELECT =-->
-        <widget-user-department></widget-user-department>
-
-        <!--== USER DROPDOWN ==-->
-        <widget-user></widget-user>
-      </q-toolbar>
-
-    </q-layout-header>
-
-    <!-- === MENU === -->
-    <q-layout-drawer id="menu_master"
-                     v-model="leftDrawerOpen"
-                     :content-class="'bg-grey-2'"
-    >
-      <q-list no-border link inset-delimiter>
-        <!-- === LOGO === -->
-        <q-list-header class="text-center">
-          <router-link :to="{ name: 'home'}">
-            <a>
-              <img src="../assets/image/logo.png" width="100%">
-            </a>
-          </router-link>
-        </q-list-header>
-
-        <!--= MENU =-->
-        <widget-menu></widget-menu>
-      </q-list>
-    </q-layout-drawer>
-
-    <!-- === ROUTER VIEW === -->
+    <!-- ROUTER VIEW -->
     <q-page-container>
-      <router-view/>
+      <router-view v-if="loadedApp" />
     </q-page-container>
 
-    <!-- === FOOTER === -->
-    <q-layout-footer class="no-shadow" v-if="false">
-      <!--=== DATA LOGIN ===-->
-      <div class="q-body-1 q-py-sm q-px-lg text-center bg-grey-2">
-        <q-icon name="copyright"/>
-        Copyright Pesonería de Ibague
-      </div>
-    </q-layout-footer>
-
-    <!-- === BACK TO TOP === -->
-    <q-page-sticky position="bottom-right" :offset="[18, 18]" class="hidden">
-      <q-btn
-        v-back-to-top.animate="{offset: 500, duration: 200}"
-        round
-        color="primary"
-        icon="keyboard_arrow_up"
-      />
-    </q-page-sticky>
-
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn
-        round
-        color="red"
-        icon="fa fa-comment"
-      />
-    </q-page-sticky>
-
+    <!-- FOOTER -->
+    <master-footer></master-footer>
   </q-layout>
 </template>
 
 <script>
-  import WidgetUser from "@imagina/quser/_components/widget-user";
-  import WidgetUserDepartment from "@imagina/quser/_components/widget-user-department";
-  import widgetMenu from "src/components/menu/widget-menu";
+  /*Components*/
+  import masterHeader from 'src/components/master/header'
+  import masterFooter from 'src/components/master/footer'
+
+  //Services
+  import appServices from 'src/services/application/index'
 
   export default {
+    meta() {
+      let siteName = this.$store.getters['site/getSettingValueByName']('core::site-name')
+      let iconHref = this.$store.getters['site/getSettingMediaByName']('isite::favicon').path
+      return {
+        title: siteName,
+        link: [{rel: 'icon', href: iconHref, id: 'icon'}],
+      }
+    },
     components: {
-      widgetMenu,
-      WidgetUserDepartment,
-      WidgetUser},
+      masterHeader,
+      masterFooter
+    },
     mounted() {
-      this.$nextTick(function () {})
+      this.$nextTick(async function () {
+        //Call to config when is mounted
+        let params = this.$route.params
+        if (!this.$route.params.fromConfig)
+          this.$router.push({name: 'app.config'})
+        this.loadedApp = true//Load route view
+      })
+    },
+    watch: {
+      $route(to, from) {
+        this.checkVersionApp(to)
+      }
     },
     data() {
       return {
-        leftDrawerOpen: false,
-        drawerState: true,
+        loadedApp: false
       }
     },
-    methods: {
-      toggleFullscreen() {
-        this.$q.fullscreen.toggle()
+    computed: {
+      showApp() {
+        return this.$store.state.app.show
       },
+    },
+    methods: {
+      isInStandaloneMode() {
+        (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone);
+      },
+
+      //Check if app is update
+      checkVersionApp(toRoute) {
+        if (toRoute.name != 'config') {
+          let currentVersion = parseInt(config('app.version').split('.').join(''))
+          appServices.crud.index('apiRoutes.site.appVersion', {remember: false}).then(response => {
+            let version = parseInt(response.data.split('.').join(''))
+            if (currentVersion < version) {
+              this.$router.push({name: 'app.config'})
+            }
+          })
+        }
+      }
     }
   }
 </script>
@@ -117,6 +85,7 @@
   #list_menu
     .q-icon
       font-size: 16px
+
     .q-item-side
       min-width 20px !important
 
@@ -133,10 +102,6 @@
   .border-content
     border 2px solid $grey-4
     border-radius 3px
-
-  .text_title
-    span
-      border-bottom 2px red solid
 
 
 </style>

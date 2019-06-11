@@ -5,7 +5,8 @@
         icon="view_list"
         size="lg"
         rounded
-        color="primary" 
+        color="primary"
+        @click="$router.push({name:'app.noticias'})"
         label="CREAR NOTICIA"/>
     </div>
     <div class="col-xs-12 q-mt-lg">
@@ -19,6 +20,7 @@
         icon="note_add"
         size="lg"
         rounded
+        @click="$router.push({name:'app.act'})"
         style="background:#D8AD1D;color:white" 
         label="CREAR Acta"/>
     </div>
@@ -32,12 +34,13 @@
     </div>
 
     <div class="col-xs-12 flex flex-center">
-      <q-btn 
-        icon="playlist_add_check"
-        size="lg"
-        rounded
-        style="background:#D7281E;color:white"
-        label="Radicación Online"/>
+      <a href="https://personeriadeibague.gov.co/radicacion-online"> <q-btn
+              icon="playlist_add_check"
+              size="lg"
+              rounded
+              style="background:#D7281E;color:white"
+              label="Radicación Online"/></a>
+
     </div>
   </div>
 </template>
